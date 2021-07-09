@@ -45,7 +45,8 @@ router.post("/", async (req, res, next) => {
       data.password = await bcrypt.hash(passwordField, 10);
       User.create(data)
         .then((user) => {
-          console.log(user);
+          req.session.user = user;
+          return res.redirect("/");
         })
         .catch((err) => {
           console.log(err);

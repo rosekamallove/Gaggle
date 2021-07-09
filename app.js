@@ -4,6 +4,7 @@ const PORT = 3000;
 const middleware = require("./middleware");
 const path = require("path");
 const mongoose = require("./databse");
+const session = require("express-session");
 
 const server = app.listen(PORT, () => {
   console.log(`server started at http://localhost:${PORT}`);
@@ -15,6 +16,14 @@ app.set("views", "views");
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
+
+app.use(
+  session({
+    secret: "skdfjksdfjaskdfajdsf",
+    resave: true,
+    saveUninitialized: false,
+  })
+);
 
 /* Routes */
 const loginRoute = require("./routes/loginRoutes");
