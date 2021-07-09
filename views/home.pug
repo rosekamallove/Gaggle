@@ -1,3 +1,5 @@
 extends layouts/main-layout.pug
 block content
     h1 Pugs are cute AF
+    p #{userLoggedin.firstName} #{userLoggedin.lastName}
+    p email: #{userLoggedin.email}

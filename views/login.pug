@@ -2,9 +2,10 @@ extends layouts/login-layout.pug
 
 block content 
     .loginContainer
-        h1 LogIn
+        h1 Login
         form(method="post") 
-            input(type="text" name="logUsername" placeholder="Username or Email" required="" )
+            p.errorMessage #{errorMessage}
+            input(type="text" name="logUsername" placeholder="Username or Email" valur=logUsername required="" )
             input(type="password" name="logPassword" placeholder="Password" required="" )
             input(type="submit" value="LogIn")
         a(href="/register") Need and account? Reagister here.
