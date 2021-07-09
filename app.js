@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const PORT = 3003;
+const PORT = 3000;
 const middleware = require("./middleware");
 const path = require("path");
 const mongoose = require("./databse");
