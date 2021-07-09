@@ -3,6 +3,7 @@ const app = express();
 const PORT = 3003;
 const middleware = require("./middleware");
 const path = require("path");
+const mongoose = require("./databse");
 
 const server = app.listen(PORT, () => {
   console.log(`server started at http://localhost:${PORT}`);
@@ -11,6 +12,8 @@ const server = app.listen(PORT, () => {
 app.set("view engine", "pug");
 app.set("views", "views");
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 
 /* Routes */
