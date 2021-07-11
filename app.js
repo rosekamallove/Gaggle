@@ -27,9 +27,11 @@ app.use(
 
 /* Routes */
 const loginRoute = require("./routes/loginRoutes");
+const logoutRoute = require("./routes/logout");
 const registerRoute = require("./routes/registerRoutes");
 app.use("/login", loginRoute);
 app.use("/register", registerRoute);
+app.use("/logout", logoutRoute);
 
 app.get("/", middleware.requireLogin, (req, res, next) => {
   let payload = {

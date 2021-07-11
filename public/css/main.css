@@ -1,6 +1,7 @@
 :root {
   --twitterBlue: #1fa2f1;
   --lightBlue: #d4edff;
+  --ligtGray: #e6ecf0;
 }
 
 a {
@@ -41,5 +42,8 @@ nav a:hover {
 }
 
 .mainSectionContainer {
-  background-color: blue;
+  padding: 0;
+  border-left: 1px solid var(--ligtGray);
+  display: flex;
+  flex-direction: column;
 }
