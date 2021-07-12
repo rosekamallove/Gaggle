@@ -33,6 +33,10 @@ app.use("/login", loginRoute);
 app.use("/register", registerRoute);
 app.use("/logout", logoutRoute);
 
+/* API Routes */
+const postsRoute = require("./routes/api/posts");
+app.use("/api/posts", postsRoute);
+
 app.get("/", middleware.requireLogin, (req, res, next) => {
   let payload = {
     pageTitle: "Home",
