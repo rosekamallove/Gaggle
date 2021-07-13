@@ -33,6 +33,12 @@ const UserSchema = new Schema(
       type: String,
       default: "/images/profilePic.jpg",
     },
+    likes: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Post",
+      },
+    ],
   },
   { timestamps: true }
 );
