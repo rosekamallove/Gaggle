@@ -1,7 +1,13 @@
+/* Main Style Elements */
 :root {
   --twitterBlue: hsl(203, 88%, 53%);
   --lightBlue: hsl(205, 100%, 92%);
   --ligtGray: hsl(204, 25%, 92%);
+  --greyText: rgb(101, 119, 134);
+  --green: hsl(145, 96%, 40%);
+  --red: hsl(351, 100%, 45%);
+  --lightGreen: hsl(145, 96%, 85%);
+  --lightRed: hsl(351, 100%, 85%);
   --spacing: 15px;
 }
 * {
@@ -11,6 +17,15 @@
 a {
   color: inherit;
   transition: 0.2s;
+}
+i {
+  border: none;
+  background-color: inherit;
+}
+button {
+  border: none;
+  background-color: inherit;
+  color: hsla(0, 0%, 0%, 0.315);
 }
 
 a:hover {
@@ -24,6 +39,7 @@ h1 {
   margin: 0;
 }
 
+/* Nav Bar */
 nav {
   display: flex;
   flex-direction: column;
@@ -52,6 +68,8 @@ nav a:hover {
   border-radius: 50%;
 }
 
+/* Main Layout */
+
 .mainSectionContainer {
   padding: 0;
   border-left: 1px solid var(--ligtGray);
@@ -68,17 +86,6 @@ nav a:hover {
   flex-shrink: 0;
 }
 
-.titleContainer h1 {
-  flex: 1;
-}
-
-.postFormContainer {
-  display: flex;
-  padding: var(--spacing);
-  border-bottom: 10px solid var(--ligtGray);
-  flex-shrink: 0;
-}
-
 .userImageContainer {
   width: 50px;
   height: 50px;
@@ -88,6 +95,19 @@ nav a:hover {
   width: 100%;
   border-radius: 50%;
   background-color: white;
+}
+
+.titleContainer h1 {
+  flex: 1;
+}
+
+/* Post Form Style */
+
+.postFormContainer {
+  display: flex;
+  padding: var(--spacing);
+  border-bottom: 10px solid var(--ligtGray);
+  flex-shrink: 0;
 }
 
 .textareaContainer {
@@ -112,4 +132,72 @@ nav a:hover {
 
 #submitPostButton:disabled {
   background-color: var(--lightBlue);
+}
+
+/* Post Style */
+
+.headar a:hover {
+  text-decoration: underline;
+}
+
+.headar a,
+.header span {
+  padding-right: 5px;
+}
+.post {
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing);
+  cursor: pointer;
+  border-bottom: 1px solid var(--ligtGray);
+  flex-shrink: 0;
+}
+
+.mainContentContainer {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+}
+
+.postContentContainer {
+  padding-left: var(--spacing);
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.displayName {
+  font-weight: 800;
+}
+
+username,
+date {
+  color: var(--greyText);
+}
+
+.postFooter {
+  display: flex;
+  align-items: center;
+}
+.postFooter .postButtonContainer {
+  padding-top: var(--spacing);
+  flex: 1;
+}
+.postFooter .postButtonContainer .comment:hover {
+  transition: 0.2s;
+  border-radius: 50%;
+  color: var(--twitterBlue);
+  background-color: var(--lightBlue);
+}
+.postFooter .postButtonContainer .retweet:hover {
+  transition: 0.2s;
+  border-radius: 50%;
+  color: var(--green);
+  background-color: var(--lightGreen);
+}
+.postFooter .postButtonContainer .love:hover {
+  transition: 0.2s;
+  border-radius: 50%;
+  color: var(--red);
+  background-color: var(--lightRed);
 }

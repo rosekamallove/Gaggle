@@ -38,15 +38,33 @@ function createPostHTML(postData) {
         <div class="userImageContainer">
           <img src="${postData.postedBy.profilePic}">
         </div>
-        <div class="postCotnentContainer">
+        <div class="postContentContainer">
           <div class="postHeader">
-            <a href='/profile/${postData.postedBy.username}'>${displayName}</a>
-            <a href='/profile/${postData.postedBy.username}'>@${postData.postedBy.username}</a>
+            <a class="displayName" href='/profile/${postData.postedBy.username}'>${displayName}</a>
+            <a class="username" href='/profile/${postData.postedBy.username}'>@${postData.postedBy.username}</a>
+            <span class='date'>${postData.createdAt}</span>
           </div>
           <div class="postBody">
             <span>${postData.content}</span>
           </div>
-          <div class="postFooter"></div>
+          <div class="postFooter">
+            <div class="postButtonContainer">
+              <button class="comment">
+                <i class="far fa-comment"></i>
+              </button>
+            </div>
+            <div class="postButtonContainer">
+              <button class="retweet">
+                <i class="fas fa-retweet"></i>
+              </button>
+            </div>
+            <div class="postButtonContainer">
+              <button class="love">
+                <i class="far fa-heart"></i>
+              </button>
+            </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
