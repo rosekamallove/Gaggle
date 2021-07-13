@@ -21,6 +21,7 @@ $("#submitPostButton").click(() => {
   };
 
   $.post("api/posts", data, (postData, status, xhr) => {
+    console.log(postData.postedBy);
     const html = createPostHTML(postData);
     $(".postBodyContainer").prepend(html);
     textBox.val("");
@@ -29,14 +30,19 @@ $("#submitPostButton").click(() => {
 });
 
 function createPostHTML(postData) {
+  /* Damn I need a better way to do this */
+  const displayName = `${postData.postedBy.firstName} ${postData.postedBy.lastName}`;
   return `
     <div class="post">
       <div class="mainContentContainer">
-        <div class="userImageConainer">
+        <div class="userImageContainer">
           <img src="${postData.postedBy.profilePic}">
         </div>
         <div class="postCotnentContainer">
-          <div class="postHeader"></div>
+          <div class="postHeader">
+            <a href='/profile/${postData.postedBy.username}'>${displayName}</a>
+            <a href='/profile/${postData.postedBy.username}'>@${postData.postedBy.username}</a>
+          </div>
           <div class="postBody">
             <span>${postData.content}</span>
           </div>
