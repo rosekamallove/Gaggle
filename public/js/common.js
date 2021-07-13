@@ -21,6 +21,6 @@ $("#submitPostButton").click(() => {
   };
 
   $.post("api/posts", data, (postData, status, xhr) => {
-    alert(postData);
+    console.log(postData);
   });
 });

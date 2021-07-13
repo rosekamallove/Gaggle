@@ -18,5 +18,5 @@ const PostSchema = new Schema(
   { timestamps: true }
 );
 
-const User = mongoose.model("User", PostSchema);
-module.exports = User;
+const Post = mongoose.model("Post", PostSchema);
+module.exports = Post;
