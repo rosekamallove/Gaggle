@@ -14,6 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 router.get("/", (req, res, next) => {
   Post.find()
     .populate("postedBy")
+    .sort({ createdAt: -1 })
     .then((posts) => res.status(200).send(posts))
     .catch((err) => console.log(err));
 });
