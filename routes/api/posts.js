@@ -8,8 +8,19 @@ const Post = require("../../schema/PostSchema");
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-router.get("/", (req, res, next) => {});
+/**********************************
+ * Handles Retrivale of The Posts *
+ **********************************/
+router.get("/", (req, res, next) => {
+  Post.find()
+    .populate("postedBy")
+    .then((posts) => res.status(200).send(posts))
+    .catch((err) => console.log(err));
+});
 
+/********************************
+ * Handles Creation of The Posts *
+ *********************************/
 router.post("/", async (req, res, next) => {
   if (!req.body.content) {
     console.error("content param not send with request");
@@ -29,7 +40,7 @@ router.post("/", async (req, res, next) => {
     .catch((err) => {
       console.log(err);
       res.sendStatus(400);
-  });
+    });
 });
 
 module.exports = router;

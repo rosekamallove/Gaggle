@@ -15,7 +15,9 @@ router.get("/", (req, res, next) => {
   res.status(200).render("register");
 });
 
-/* User Registration Post */
+/*********************
+ * User Registration *
+ *********************/
 router.post("/", async (req, res, next) => {
   const firstName = req.body.firstName.trim();
   const lastName = req.body.lastName.trim();

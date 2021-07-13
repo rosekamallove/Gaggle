@@ -2,3 +2,5 @@ extends layouts/main-layout.pug
 block content
     +createPostForm(userLoggedin)
     .postBodyContainer
+block scripts 
+    script(src="/js/home.js") 

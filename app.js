@@ -6,10 +6,11 @@ const path = require("path");
 const mongoose = require("./databse");
 const session = require("express-session");
 
-const server = app.listen(PORT, () => {
-  console.log(`server started at http://localhost:${PORT}`);
-});
+const server = app.listen(PORT, () =>
+  console.log(`server started at http://localhost:${PORT}`)
+);
 
+/* Setting Up Views */
 app.set("view engine", "pug");
 app.set("views", "views");
 
@@ -25,7 +26,9 @@ app.use(
   })
 );
 
-/* Routes */
+/***************
+ *    Routes   *
+ ***************/
 const loginRoute = require("./routes/loginRoutes");
 const logoutRoute = require("./routes/logout");
 const registerRoute = require("./routes/registerRoutes");
@@ -33,10 +36,13 @@ app.use("/login", loginRoute);
 app.use("/register", registerRoute);
 app.use("/logout", logoutRoute);
 
-/* API Routes */
+/***************
+ *  API Routes *
+ ***************/
 const postsRoute = require("./routes/api/posts");
 app.use("/api/posts", postsRoute);
 
+/* Root URL */
 app.get("/", middleware.requireLogin, (req, res, next) => {
   let payload = {
     pageTitle: "Home",

@@ -30,8 +30,11 @@ $("#submitPostButton").click(() => {
 });
 
 function createPostHTML(postData) {
-  /* Damn I need a better way to do this */
+  const postedBy = postData.postedBy;
+  if (postedBy._id === undefined) return console.log("userObject no Populated");
+
   const displayName = `${postData.postedBy.firstName} ${postData.postedBy.lastName}`;
+  /* Damn I need a better way to do this */
   return `
     <div class="post">
       <div class="mainContentContainer">

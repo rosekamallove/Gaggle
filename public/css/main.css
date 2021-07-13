@@ -1,4 +1,6 @@
-/* Main Style Elements */
+/*******************
+* MainStyeElements *
+*******************/
 :root {
   --twitterBlue: hsl(203, 88%, 53%);
   --lightBlue: hsl(205, 100%, 92%);
@@ -39,7 +41,9 @@ h1 {
   margin: 0;
 }
 
-/* Nav Bar */
+/******************
+*     Nav Bar     *
+*******************/
 nav {
   display: flex;
   flex-direction: column;
@@ -68,8 +72,9 @@ nav a:hover {
   border-radius: 50%;
 }
 
-/* Main Layout */
-
+/******************
+*   Main Layout   *
+*******************/
 .mainSectionContainer {
   padding: 0;
   border-left: 1px solid var(--ligtGray);
@@ -101,8 +106,9 @@ nav a:hover {
   flex: 1;
 }
 
-/* Post Form Style */
-
+/******************
+* Post Form Style *
+*******************/
 .postFormContainer {
   display: flex;
   padding: var(--spacing);
@@ -134,8 +140,9 @@ nav a:hover {
   background-color: var(--lightBlue);
 }
 
-/* Post Style */
-
+/*******************
+*   Post Styles    *
+********************/
 .headar a:hover {
   text-decoration: underline;
 }
