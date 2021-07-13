@@ -159,6 +159,9 @@ nav a:hover {
   border-bottom: 1px solid var(--ligtGray);
   flex-shrink: 0;
 }
+.date {
+  color: var(--greyText);
+}
 
 .mainContentContainer {
   display: flex;

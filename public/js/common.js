@@ -34,6 +34,7 @@ function createPostHTML(postData) {
   if (postedBy._id === undefined) return console.log("userObject no Populated");
 
   const displayName = `${postData.postedBy.firstName} ${postData.postedBy.lastName}`;
+  const timestamp = timeDifference(new Date(), new Date(postData.createdAt));
   /* Damn I need a better way to do this */
   return `
     <div class="post">
@@ -45,7 +46,7 @@ function createPostHTML(postData) {
           <div class="postHeader">
             <a class="displayName" href='/profile/${postData.postedBy.username}'>${displayName}</a>
             <a class="username" href='/profile/${postData.postedBy.username}'>@${postData.postedBy.username}</a>
-            <span class='date'>${postData.createdAt}</span>
+            <span class='date'>${timestamp}</span>
           </div>
           <div class="postBody">
             <span>${postData.content}</span>
@@ -72,4 +73,29 @@ function createPostHTML(postData) {
       </div>
     </div>
   `;
+}
+
+function timeDifference(current, previous) {
+  var msPerMinute = 60 * 1000;
+  var msPerHour = msPerMinute * 60;
+  var msPerDay = msPerHour * 24;
+  var msPerMonth = msPerDay * 30;
+  var msPerYear = msPerDay * 365;
+
+  var elapsed = current - previous;
+
+  if (elapsed < msPerMinute) {
+    if (elapsed / 1000 < 30) return "Just Now";
+    return Math.round(elapsed / 1000) + " seconds ago";
+  } else if (elapsed < msPerHour)
+    return Math.round(elapsed / msPerMinute) + " minutes ago";
+  else if (elapsed < msPerDay) {
+    return Math.round(elapsed / msPerHour) + " hours ago";
+  } else if (elapsed < msPerMonth) {
+    return Math.round(elapsed / msPerDay) + " days ago";
+  } else if (elapsed < msPerYear) {
+    return Math.round(elapsed / msPerMonth) + " months ago";
+  } else {
+    return Math.round(elapsed / msPerYear) + " years ago";
+  }
 }
