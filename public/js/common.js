@@ -29,6 +29,29 @@ $("#submitPostButton").click(() => {
   });
 });
 
+$(document).on("click", ".likeButton", () => {
+  const button = $(event.target);
+  const postId = getPostIdByFromElement(button);
+  if (postId === undefined) return;
+
+  $.ajax({
+    url: `/api/posts/${postId}/like`,
+    type: "PUT",
+    success: (postData) => {
+      console.log(postData.likes.length);
+    },
+  });
+});
+
+function getPostIdByFromElement(element) {
+  const isRoot = element.hasClass("post");
+  const rootElement = isRoot ? element : element.closest(".post");
+  const postId = rootElement.data().id;
+
+  if (postId === undefined) return alert("Post Id Undefined");
+  return postId;
+}
+
 function createPostHTML(postData) {
   const postedBy = postData.postedBy;
   if (postedBy._id === undefined) return console.log("userObject no Populated");
@@ -37,7 +60,7 @@ function createPostHTML(postData) {
   const timestamp = timeDifference(new Date(), new Date(postData.createdAt));
   /* Damn I need a better way to do this */
   return `
-    <div class="post">
+    <div class="post" data-id="${postData._id}">
       <div class="mainContentContainer">
         <div class="userImageContainer">
           <img src="${postData.postedBy.profilePic}">
@@ -53,17 +76,17 @@ function createPostHTML(postData) {
           </div>
           <div class="postFooter">
             <div class="postButtonContainer">
-              <button class="comment">
+              <button class="commentButton">
                 <i class="far fa-comment"></i>
               </button>
             </div>
             <div class="postButtonContainer">
-              <button class="retweet">
+              <button class="retweetButton">
                 <i class="fas fa-retweet"></i>
               </button>
             </div>
             <div class="postButtonContainer">
-              <button class="love">
+              <button class="likeButton">
                 <i class="far fa-heart"></i>
               </button>
             </div>

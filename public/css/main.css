@@ -193,19 +193,19 @@ date {
   padding-top: var(--spacing);
   flex: 1;
 }
-.postFooter .postButtonContainer .comment:hover {
+.postFooter .postButtonContainer .commentButton:hover {
   transition: 0.2s;
   border-radius: 50%;
   color: var(--twitterBlue);
   background-color: var(--lightBlue);
 }
-.postFooter .postButtonContainer .retweet:hover {
+.postFooter .postButtonContainer .retweetButton:hover {
   transition: 0.2s;
   border-radius: 50%;
   color: var(--green);
   background-color: var(--lightGreen);
 }
-.postFooter .postButtonContainer .love:hover {
+.postFooter .postButtonContainer .likeButton:hover {
   transition: 0.2s;
   border-radius: 50%;
   color: var(--red);
