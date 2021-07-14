@@ -97,9 +97,17 @@ function getPostIdByFromElement(element) {
 
 /* Returns the Markup for a Post */
 function createPostHTML(postData) {
+  if (postData == null) return alert("postObject Null");
+
+  const isRetweet = postData.retweetData !== undefined;
+  const retweetedBy = isRetweet ? postData.postedBy.username : null;
+  postData = isRetweet ? postData.retweetData : postData;
+
+  /* if PostedBy is undefined */
   const postedBy = postData.postedBy;
   if (postedBy._id === undefined) return console.log("userObject no Populated");
 
+  /* Display variable */
   const displayName = `${postData.postedBy.firstName} ${postData.postedBy.lastName}`;
   const timestamp = timeDifference(new Date(), new Date(postData.createdAt));
 
