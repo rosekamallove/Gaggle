@@ -1,5 +1,5 @@
 /**********************************
- *  Handles submit button state   *
+ *  Handles @submit_button_state   *
  **********************************/
 $("#postTextarea").keyup((event) => {
   const textbox = $(event.target);
@@ -121,8 +121,19 @@ function createPostHTML(postData) {
     ? "active"
     : "";
 
+  /* Retweet Display Text */
+  var retweetText = "";
+  if (isRetweet) {
+    retweetText = `
+    <span>
+      <i class="fas fa-retweet"></i>
+      Retweeted by <a href="/profile/${retweetedBy}">@${retweetedBy}</a>
+    </span>`;
+  }
+
   /* Damn I need a better way to do this */
   return `
+  <div class="postActionContainer">${retweetText}</div>
     <div class="post" data-id="${postData._id}">
       <div class="mainContentContainer">
         <div class="userImageContainer">
