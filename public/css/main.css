@@ -221,3 +221,6 @@ date {
 .postFooter .postButtonContainer .likeButton.active {
   color: var(--red);
 }
+.postFooter .postButtonContainer .retweetButton.active {
+  color: var(--green);
+}

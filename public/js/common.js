@@ -71,15 +71,13 @@ $(document).on("click", ".retweetButton", () => {
     url: `/api/posts/${postId}/retweet`,
     type: "POST",
     success: (postData) => {
-      console.log(postData);
-      /*
-      button.find("span").text(postData.likes.length || "");
-      if (postData.likes.includes(userLoggedin._id)) {
+      button.find("span").text(postData.retweetUsers.length || "");
+
+      if (postData.retweetUsers.includes(userLoggedin._id)) {
         button.addClass("active");
       } else {
         button.removeClass("active");
       }
-      */
     },
   });
 });
@@ -104,7 +102,14 @@ function createPostHTML(postData) {
 
   const displayName = `${postData.postedBy.firstName} ${postData.postedBy.lastName}`;
   const timestamp = timeDifference(new Date(), new Date(postData.createdAt));
+
+  /* Button state on page load */
   const likeButtonActiveClass = postData.likes.includes(userLoggedin._id)
+    ? "active"
+    : "";
+  const retweetButtonActiveClass = postData.retweetUsers.includes(
+    userLoggedin._id
+  )
     ? "active"
     : "";
 
@@ -138,8 +143,9 @@ function createPostHTML(postData) {
               </button>
             </div>
             <div class="postButtonContainer">
-              <button class="retweetButton">
+              <button class="retweetButton ${retweetButtonActiveClass}">
                 <i class="fas fa-retweet"></i>
+                <span>${postData.retweetUsers.length || ""}</span>
               </button>
             </div>
             <div class="postButtonContainer">
