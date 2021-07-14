@@ -71,7 +71,7 @@ router.put("/:id/like", async (req, res, next) => {
   const post = await Post.findByIdAndUpdate(
     postId,
     {
-      [option]: { likes: postId },
+      [option]: { likes: userId },
     },
     { new: true }
   ).catch((err) => {

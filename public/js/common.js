@@ -1,3 +1,4 @@
+/* Handles submit button state */
 $("#postTextarea").keyup((event) => {
   const textbox = $(event.target);
   const value = textbox.val().trim();
@@ -12,6 +13,7 @@ $("#postTextarea").keyup((event) => {
   submitButton.prop("disabled", false);
 });
 
+/* Handles Creation of Posts */
 $("#submitPostButton").click(() => {
   const button = $(event.target);
   const textBox = $("#postTextarea");
@@ -29,6 +31,7 @@ $("#submitPostButton").click(() => {
   });
 });
 
+/* Handeling Likes for Each Post */
 $(document).on("click", ".likeButton", () => {
   const button = $(event.target);
   const postId = getPostIdByFromElement(button);
@@ -38,26 +41,38 @@ $(document).on("click", ".likeButton", () => {
     url: `/api/posts/${postId}/like`,
     type: "PUT",
     success: (postData) => {
-      console.log(postData.likes.length);
+      button.find("span").text(postData.likes.length || "");
+
+      /* State of Like Button */
+      if (postData.likes.includes(userLoggedin._id)) {
+        button.addClass("active");
+      } else {
+        button.removeClass("active");
+      }
     },
   });
 });
 
+/* Returns the Root element with PostID */
 function getPostIdByFromElement(element) {
   const isRoot = element.hasClass("post");
   const rootElement = isRoot ? element : element.closest(".post");
   const postId = rootElement.data().id;
-
   if (postId === undefined) return alert("Post Id Undefined");
   return postId;
 }
 
+/* Returns the Markup for a Post */
 function createPostHTML(postData) {
   const postedBy = postData.postedBy;
   if (postedBy._id === undefined) return console.log("userObject no Populated");
 
   const displayName = `${postData.postedBy.firstName} ${postData.postedBy.lastName}`;
   const timestamp = timeDifference(new Date(), new Date(postData.createdAt));
+  const likeButtonActiveClass = postData.likes.includes(userLoggedin._id)
+    ? "active"
+    : "";
+
   /* Damn I need a better way to do this */
   return `
     <div class="post" data-id="${postData._id}">
@@ -67,8 +82,15 @@ function createPostHTML(postData) {
         </div>
         <div class="postContentContainer">
           <div class="postHeader">
-            <a class="displayName" href='/profile/${postData.postedBy.username}'>${displayName}</a>
-            <a class="username" href='/profile/${postData.postedBy.username}'>@${postData.postedBy.username}</a>
+
+            <a class="displayName" href='/profile/${
+              postData.postedBy.username
+            }'>${displayName}</a>
+
+            <a class="username" href='/profile/${
+              postData.postedBy.username
+            }'>@${postData.postedBy.username}</a>
+
             <span class='date'>${timestamp}</span>
           </div>
           <div class="postBody">
@@ -86,8 +108,9 @@ function createPostHTML(postData) {
               </button>
             </div>
             <div class="postButtonContainer">
-              <button class="likeButton">
+              <button class="likeButton ${likeButtonActiveClass}">
                 <i class="far fa-heart"></i>
+                <span>${postData.likes.length || ""}</span>
               </button>
             </div>
             </div>
@@ -98,6 +121,7 @@ function createPostHTML(postData) {
   `;
 }
 
+/* Date() -> timestamp + timestamp ago */
 function timeDifference(current, previous) {
   var msPerMinute = 60 * 1000;
   var msPerHour = msPerMinute * 60;

@@ -24,10 +24,16 @@ i {
   border: none;
   background-color: inherit;
 }
+
 button {
   border: none;
   background-color: inherit;
   color: hsla(0, 0%, 0%, 0.315);
+}
+
+button i,
+button span {
+  pointer-events: none;
 }
 
 a:hover {
@@ -210,4 +216,8 @@ date {
   border-radius: 50%;
   color: var(--red);
   background-color: var(--lightRed);
+}
+
+.postFooter .postButtonContainer .likeButton.active {
+  color: var(--red);
 }
