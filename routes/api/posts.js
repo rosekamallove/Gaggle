@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 /**********************************
- * Handles Retrivale of The Posts *
+ * Handles @Retrivale of The Posts *
  **********************************/
 router.get("/", (req, res, next) => {
   Post.find()
@@ -20,7 +20,7 @@ router.get("/", (req, res, next) => {
 });
 
 /********************************
- * Handles Creation of The Posts *
+ * Handles @Creation of The Posts *
  *********************************/
 router.post("/", async (req, res, next) => {
   if (!req.body.content) {
@@ -45,13 +45,50 @@ router.post("/", async (req, res, next) => {
 });
 
 /********************************
- *  Handles Likes of The Posts  *
+ *  Handles @Likes of The Posts  *
  *********************************/
 router.put("/:id/like", async (req, res, next) => {
   const postId = req.params.id;
   const userId = req.session.user._id;
   const isLiked =
     req.session.user.likes && req.session.user.likes.includes(postId);
+
+  const option = isLiked ? "$pull" : "$addToSet";
+
+  /* Inserting like to UserDB */
+  req.session.user = await User.findByIdAndUpdate(
+    userId,
+    {
+      [option]: { likes: postId },
+    },
+    { new: true }
+  ).catch((err) => {
+    console.log(err);
+    res.sendStatus(400);
+  });
+
+  /* Inserting like to PostDB */
+  const post = await Post.findByIdAndUpdate(
+    postId,
+    {
+      [option]: { likes: userId },
+    },
+    { new: true }
+  ).catch((err) => {
+    console.log(err);
+    res.sendStatus(400);
+  });
+  res.status(200).send(post);
+});
+
+/********************************
+ *  Handles @Retweet of The Posts  *
+ *********************************/
+router.post("/:id/retweet", async (req, res, next) => {
+  const postId = req.params.id;
+  const userId = req.session.user._id;
+
+  /* Try and delete retweet */
 
   const option = isLiked ? "$pull" : "$addToSet";
 

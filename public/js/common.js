@@ -1,4 +1,6 @@
-/* Handles submit button state */
+/**********************************
+ *  Handles submit button state   *
+ **********************************/
 $("#postTextarea").keyup((event) => {
   const textbox = $(event.target);
   const value = textbox.val().trim();
@@ -13,7 +15,9 @@ $("#postTextarea").keyup((event) => {
   submitButton.prop("disabled", false);
 });
 
-/* Handles Creation of Posts */
+/**********************************
+ *    Handles @Creation of Post    *
+ **********************************/
 $("#submitPostButton").click(() => {
   const button = $(event.target);
   const textBox = $("#postTextarea");
@@ -31,7 +35,9 @@ $("#submitPostButton").click(() => {
   });
 });
 
-/* Handeling Likes for Each Post */
+/**********************************
+ *  Handles @Likes for Each Post   *
+ **********************************/
 $(document).on("click", ".likeButton", () => {
   const button = $(event.target);
   const postId = getPostIdByFromElement(button);
@@ -52,6 +58,35 @@ $(document).on("click", ".likeButton", () => {
     },
   });
 });
+
+/**********************************
+ * Handles @Retweet for Each Post  *
+ **********************************/
+$(document).on("click", ".retweetButton", () => {
+  const button = $(event.target);
+  const postId = getPostIdByFromElement(button);
+  if (postId === undefined) return;
+
+  $.ajax({
+    url: `/api/posts/${postId}/retweet`,
+    type: "POST",
+    success: (postData) => {
+      console.log(postData);
+      /*
+      button.find("span").text(postData.likes.length || "");
+      if (postData.likes.includes(userLoggedin._id)) {
+        button.addClass("active");
+      } else {
+        button.removeClass("active");
+      }
+      */
+    },
+  });
+});
+
+/**********************
+ *  @Utiliy Functions  *
+ *********************/
 
 /* Returns the Root element with PostID */
 function getPostIdByFromElement(element) {
