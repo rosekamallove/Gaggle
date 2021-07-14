@@ -81,22 +81,39 @@ router.put("/:id/like", async (req, res, next) => {
   res.status(200).send(post);
 });
 
-/********************************
- *  Handles @Retweet of The Posts  *
+/*********************************
+ * Handles @Retweet of The Posts *
  *********************************/
 router.post("/:id/retweet", async (req, res, next) => {
   const postId = req.params.id;
   const userId = req.session.user._id;
 
-  /* Try and delete retweet */
+  /* retweeted ? delete */
+  const deletedPost = await Post.findOneAndDelete({
+    postedBy: userId,
+    retweetData: postId,
+  }).catch((err) => {
+    console.log(err);
+    res.sendStatus(400);
+  });
 
-  const option = isLiked ? "$pull" : "$addToSet";
+  const option = deletedPost != null ? "$pull" : "$addToSet";
+  var repost = deletedPost;
 
-  /* Inserting like to UserDB */
+  if (repost == null) {
+    repost = await Post.create({ postedBy: userId, retweetData: postId }).catch(
+      (err) => {
+        console.log(err);
+        res.sendStatus(400);
+      }
+    );
+  }
+
+  /* Inserting retwet to UserDB */
   req.session.user = await User.findByIdAndUpdate(
     userId,
     {
-      [option]: { likes: postId },
+      [option]: { retweets: repost._id },
     },
     { new: true }
   ).catch((err) => {
@@ -104,17 +121,18 @@ router.post("/:id/retweet", async (req, res, next) => {
     res.sendStatus(400);
   });
 
-  /* Inserting like to PostDB */
+  /* Inserting retweets to PostDB */
   const post = await Post.findByIdAndUpdate(
     postId,
     {
-      [option]: { likes: userId },
+      [option]: { retweetUsers: userId },
     },
     { new: true }
   ).catch((err) => {
     console.log(err);
     res.sendStatus(400);
   });
+
   res.status(200).send(post);
 });
 
