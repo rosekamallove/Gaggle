@@ -1,4 +1,6 @@
-/* Handles submit button state */
+/**********************************
+ *  Handles @submit_button_state   *
+ **********************************/
 $("#postTextarea").keyup((event) => {
   const textbox = $(event.target);
   const value = textbox.val().trim();
@@ -13,7 +15,9 @@ $("#postTextarea").keyup((event) => {
   submitButton.prop("disabled", false);
 });
 
-/* Handles Creation of Posts */
+/**********************************
+ *    Handles @Creation of Post    *
+ **********************************/
 $("#submitPostButton").click(() => {
   const button = $(event.target);
   const textBox = $("#postTextarea");
@@ -31,7 +35,9 @@ $("#submitPostButton").click(() => {
   });
 });
 
-/* Handeling Likes for Each Post */
+/**********************************
+ *  Handles @Likes for Each Post   *
+ **********************************/
 $(document).on("click", ".likeButton", () => {
   const button = $(event.target);
   const postId = getPostIdByFromElement(button);
@@ -53,6 +59,33 @@ $(document).on("click", ".likeButton", () => {
   });
 });
 
+/**********************************
+ * Handles @Retweet for Each Post  *
+ **********************************/
+$(document).on("click", ".retweetButton", () => {
+  const button = $(event.target);
+  const postId = getPostIdByFromElement(button);
+  if (postId === undefined) return;
+
+  $.ajax({
+    url: `/api/posts/${postId}/retweet`,
+    type: "POST",
+    success: (postData) => {
+      button.find("span").text(postData.retweetUsers.length || "");
+
+      if (postData.retweetUsers.includes(userLoggedin._id)) {
+        button.addClass("active");
+      } else {
+        button.removeClass("active");
+      }
+    },
+  });
+});
+
+/**********************
+ *  @Utiliy Functions  *
+ *********************/
+
 /* Returns the Root element with PostID */
 function getPostIdByFromElement(element) {
   const isRoot = element.hasClass("post");
@@ -64,17 +97,43 @@ function getPostIdByFromElement(element) {
 
 /* Returns the Markup for a Post */
 function createPostHTML(postData) {
+  if (postData == null) return alert("postObject Null");
+
+  const isRetweet = postData.retweetData !== undefined;
+  const retweetedBy = isRetweet ? postData.postedBy.username : null;
+  postData = isRetweet ? postData.retweetData : postData;
+
+  /* if PostedBy is undefined */
   const postedBy = postData.postedBy;
   if (postedBy._id === undefined) return console.log("userObject no Populated");
 
+  /* Display variable */
   const displayName = `${postData.postedBy.firstName} ${postData.postedBy.lastName}`;
   const timestamp = timeDifference(new Date(), new Date(postData.createdAt));
+
+  /* Button state on page load */
   const likeButtonActiveClass = postData.likes.includes(userLoggedin._id)
     ? "active"
     : "";
+  const retweetButtonActiveClass = postData.retweetUsers.includes(
+    userLoggedin._id
+  )
+    ? "active"
+    : "";
+
+  /* Retweet Display Text */
+  var retweetText = "";
+  if (isRetweet) {
+    retweetText = `
+    <span>
+      <i class="fas fa-retweet"></i>
+      Retweeted by <a href="/profile/${retweetedBy}">@${retweetedBy}</a>
+    </span>`;
+  }
 
   /* Damn I need a better way to do this */
   return `
+  <div class="postActionContainer">${retweetText}</div>
     <div class="post" data-id="${postData._id}">
       <div class="mainContentContainer">
         <div class="userImageContainer">
@@ -103,8 +162,9 @@ function createPostHTML(postData) {
               </button>
             </div>
             <div class="postButtonContainer">
-              <button class="retweetButton">
+              <button class="retweetButton ${retweetButtonActiveClass}">
                 <i class="fas fa-retweet"></i>
+                <span>${postData.retweetUsers.length || ""}</span>
               </button>
             </div>
             <div class="postButtonContainer">

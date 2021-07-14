@@ -221,3 +221,13 @@ date {
 .postFooter .postButtonContainer .likeButton.active {
   color: var(--red);
 }
+.postFooter .postButtonContainer .retweetButton.active {
+  color: var(--green);
+}
+
+.postActionContainer {
+  padding: var(--spacing);
+  font-size: 13px;
+  color: var(--greyText);
+  /*margin-bottom: var(--spacing);*/
+}
