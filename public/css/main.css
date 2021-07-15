@@ -122,6 +122,12 @@ nav a:hover {
   flex-shrink: 0;
 }
 
+.modal .postFormContainer {
+  border: none;
+  padding: 0;
+  padding-top: var(--spacing);
+}
+
 .textareaContainer {
   flex: 1;
   padding-left: var(--spacing);
