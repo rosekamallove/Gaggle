@@ -1,11 +1,17 @@
 /**********************************
- *  Handles @submit_button_state   *
+ *  Handles @submit_button_state  *
  **********************************/
 $("#postTextarea, #replyTextarea").keyup((event) => {
   const textbox = $(event.target);
   const value = textbox.val().trim();
 
-  const submitButton = $("#submitPostButton");
+  /* Checking for if Modal or Post */
+  const isModal = textbox.parents(".modal").length == 1;
+
+  const submitButton = isModal
+    ? $("#submitReplyButton")
+    : $("#submitPostButton");
+
   if (submitButton.length == 0) return console.error("No submit Button found");
 
   if (value == "") {
