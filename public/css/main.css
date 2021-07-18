@@ -127,6 +127,15 @@ nav a:hover {
   padding: 0;
   padding-top: var(--spacing);
 }
+.modal .postActionContainer {
+  margin-top: 0;
+  padding-top: 0;
+}
+.modal .post {
+  margin-top: 0;
+  padding: 0;
+  padding-bottom: var(--spacing);
+}
 
 .textareaContainer {
   flex: 1;

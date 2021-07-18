@@ -20,19 +20,20 @@ $("#postTextarea, #replyTextarea").keyup((event) => {
   }
   submitButton.prop("disabled", false);
 });
-
 /**********************************
  *  Handles @reply Show On Modal  *
  **********************************/
 $("#replyModal").on("show.bs.modal", (event) => {
   const button = $(event.relatedTarget);
   const postId = getPostIdByFromElement(button);
-
   $.get(`/api/posts/${postId}`, (posts) => {
-    console.log(posts);
+    outputPosts(posts, $("#originalPostContainer"));
   });
 });
-
+/* Clearing the html after Unmount */
+$("#replyModal").on("hidden.bs.modal", () =>
+  $("#originalPostContainer").html("")
+);
 /**********************************
  *    Handles @Creation of Post    *
  **********************************/

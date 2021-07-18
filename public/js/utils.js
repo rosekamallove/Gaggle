@@ -2,6 +2,21 @@
  *  @Utiliy Functions  *
  *********************/
 
+/* Returns the Html for Posts */
+function outputPosts(posts, container) {
+  container.html("");
+  if (posts.length == 0) container.append("<span> No results found </span>");
+
+  if (!Array.isArray(posts)) {
+    posts = [posts];
+  }
+
+  posts.forEach((post) => {
+    const html = createPostHTML(post);
+    container.append(html);
+  });
+}
+
 /* Returns the Markup for a Post */
 function createPostHTML(postData) {
   if (postData == null) return alert("postObject Null");
