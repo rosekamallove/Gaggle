@@ -22,6 +22,18 @@ $("#postTextarea, #replyTextarea").keyup((event) => {
 });
 
 /**********************************
+ *  Handles @reply Show On Modal  *
+ **********************************/
+$("#replyModal").on("show.bs.modal", (event) => {
+  const button = $(event.relatedTarget);
+  const postId = getPostIdByFromElement(button);
+
+  $.get(`/api/posts/${postId}`, (posts) => {
+    console.log(posts);
+  });
+});
+
+/**********************************
  *    Handles @Creation of Post    *
  **********************************/
 $("#submitPostButton").click(() => {
@@ -40,7 +52,6 @@ $("#submitPostButton").click(() => {
     button.prop("disabled", true);
   });
 });
-
 /**********************************
  *  Handles @Likes for Each Post   *
  **********************************/

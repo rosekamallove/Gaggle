@@ -11,7 +11,8 @@ app.use(express.urlencoded({ extended: false }));
 /**********************************
  * Handles @Retrivale of The Posts *
  **********************************/
-router.get("/", (req, res, next) => {
+router.get("/", async (req, res, next) => {
+  /*
   Post.find()
     .populate("postedBy")
     .populate("retweetData")
@@ -21,6 +22,20 @@ router.get("/", (req, res, next) => {
       res.status(200).send(posts);
     })
     .catch((err) => console.log(err));
+*/
+  const posts = await getPosts({});
+  res.status(200).send(posts);
+});
+
+/**********************************
+ * @Retrivale of The Reply Posts *
+ **********************************/
+router.get("/:id", async (req, res, next) => {
+  const postId = req.params.id;
+
+  // returns an array
+  const posts = await getPosts({ _id: postId });
+  res.status(200).send(posts[0]);
 });
 
 /********************************
@@ -140,4 +155,16 @@ router.post("/:id/retweet", async (req, res, next) => {
   res.status(200).send(post);
 });
 
+/**********************************
+ *    Get Posts with @post_id     *
+ **********************************/
+async function getPosts(filter) {
+  const posts = Post.find(filter)
+    .populate("postedBy")
+    .populate("retweetData")
+    .sort({ createdAt: -1 })
+    .catch((err) => console.log(err));
+
+  return await User.populate(posts, { path: "retweetData.postedBy" });
+}
 module.exports = router;
