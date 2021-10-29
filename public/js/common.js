@@ -26,6 +26,9 @@ $("#postTextarea, #replyTextarea").keyup((event) => {
 $("#replyModal").on("show.bs.modal", (event) => {
   const button = $(event.relatedTarget);
   const postId = getPostIdByFromElement(button);
+
+  $("#submitReplyButton").data("id", postId);
+
   $.get(`/api/posts/${postId}`, (posts) => {
     outputPosts(posts, $("#originalPostContainer"));
   });
@@ -35,18 +38,26 @@ $("#replyModal").on("hidden.bs.modal", () =>
   $("#originalPostContainer").html("")
 );
 /**********************************
- *    Handles @Creation of Post    *
+ *Handles @Creation of Post and Reply*
  **********************************/
-$("#submitPostButton").click(() => {
+$("#submitPostButton, #submitReplyButton").click(() => {
   const button = $(event.target);
-  const textBox = $("#postTextarea");
 
-  const data = {
+  /* Checking for if Modal or Post */
+  const isModal = button.parents(".modal").length == 1;
+  const textBox = isModal ? $("#replyTextarea") : $("#postTextarea");
+
+  var data = {
     content: textBox.val(),
   };
 
+  if (isModal) {
+    const id = button.data().id;
+    if (id == null) alert("Button id is null");
+    data.replyTo = id;
+  }
+
   $.post("api/posts", data, (postData, status, xhr) => {
-    console.log(postData.postedBy);
     const html = createPostHTML(postData);
     $(".postBodyContainer").prepend(html);
     textBox.val("");

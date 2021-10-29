@@ -47,10 +47,14 @@ router.post("/", async (req, res, next) => {
     return res.status(400).send("Bad request");
   }
 
-  const postData = {
+  var postData = {
     content: req.body.content,
     postedBy: req.session.user,
   };
+
+  if (req.body.replyTo) {
+    postData.replyTo = req.body.replyTo;
+  }
 
   Post.create(postData)
     .then(async (newPost) => {
