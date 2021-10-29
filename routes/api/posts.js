@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: false }));
 /**********************************
  * Handles @Retrivale of The Posts *
  **********************************/
-router.get("/", async (req, res, next) => {
+router.get("/", async (req, res, _next) => {
   /*
   Post.find()
     .populate("postedBy")
@@ -30,7 +30,7 @@ router.get("/", async (req, res, next) => {
 /**********************************
  * @Retrivale of The Reply Posts *
  **********************************/
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", async (req, res, _next) => {
   const postId = req.params.id;
 
   // returns an array
@@ -41,7 +41,7 @@ router.get("/:id", async (req, res, next) => {
 /********************************
  * Handles @Creation of The Posts *
  *********************************/
-router.post("/", async (req, res, next) => {
+router.post("/", async (req, res, _next) => {
   if (!req.body.content) {
     console.error("content param not send with request");
     return res.status(400).send("Bad request");
@@ -70,7 +70,7 @@ router.post("/", async (req, res, next) => {
 /********************************
  *  Handles @Likes of The Posts  *
  *********************************/
-router.put("/:id/like", async (req, res, next) => {
+router.put("/:id/like", async (req, res, _next) => {
   const postId = req.params.id;
   const userId = req.session.user._id;
   const isLiked =
@@ -171,4 +171,5 @@ async function getPosts(filter) {
 
   return await User.populate(posts, { path: "retweetData.postedBy" });
 }
+
 module.exports = router;

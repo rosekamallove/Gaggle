@@ -20,6 +20,7 @@ $("#postTextarea, #replyTextarea").keyup((event) => {
   }
   submitButton.prop("disabled", false);
 });
+
 /**********************************
  *  Handles @reply Show On Modal  *
  **********************************/
@@ -37,6 +38,7 @@ $("#replyModal").on("show.bs.modal", (event) => {
 $("#replyModal").on("hidden.bs.modal", () =>
   $("#originalPostContainer").html("")
 );
+
 /**********************************
  *Handles @Creation of Post and Reply*
  **********************************/
@@ -64,6 +66,7 @@ $("#submitPostButton, #submitReplyButton").click(() => {
     button.prop("disabled", true);
   });
 });
+
 /**********************************
  *  Handles @Likes for Each Post   *
  **********************************/
